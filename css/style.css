@@ -479,9 +479,15 @@ nav {
 .about-grid {
   display: grid;
   /* left column wider, right column narrower */
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: minmax(0, 2fr) minmax(280px, 1fr);
   gap: 4rem;
   align-items: start;
+}
+
+.about-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .about-photo {
@@ -496,7 +502,7 @@ nav {
   align-items: center;
   justify-content: center;
   font-size: 5rem;
-  margin: 2rem auto 0 auto;
+  margin: 0 auto;
 }
 
 .about-contact-links {
@@ -504,8 +510,7 @@ nav {
   display: flex;
   justify-content: center;
   gap: 0.6rem;
-  flex-wrap: nowrap;
-  overflow-x: auto;
+  flex-wrap: wrap;
 }
 
 .about-contact-link {
@@ -892,6 +897,10 @@ footer {
   .featured-grid,
   .about-grid,
   .contact-grid { grid-template-columns: 1fr; }
+
+  .about-media {
+    margin-top: 0.5rem;
+  }
 
   .about-stats { grid-template-columns: 1fr 1fr; }
 
