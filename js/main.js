@@ -72,6 +72,46 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   });
 });
 
+// --- Auto-loop skills strip on home page ---
+if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  document.querySelectorAll('.skills-strip-inner').forEach(strip => {
+    if (strip.dataset.autoLoopReady === 'true') return;
+
+    const originalItems = Array.from(strip.children);
+    if (originalItems.length < 2) return;
+
+    strip.dataset.autoLoopReady = 'true';
+
+    // Duplicate tags once so scrolling can wrap seamlessly.
+    originalItems.forEach(item => {
+      const clone = item.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      strip.appendChild(clone);
+    });
+
+    let paused = false;
+    const pxPerFrame = 0.5;
+    const loopWidth = strip.scrollWidth / 2;
+
+    const tick = () => {
+      if (!paused) {
+        strip.scrollLeft += pxPerFrame;
+        if (strip.scrollLeft >= loopWidth) {
+          strip.scrollLeft -= loopWidth;
+        }
+      }
+      requestAnimationFrame(tick);
+    };
+
+    strip.addEventListener('mouseenter', () => { paused = true; });
+    strip.addEventListener('mouseleave', () => { paused = false; });
+    strip.addEventListener('touchstart', () => { paused = true; }, { passive: true });
+    strip.addEventListener('touchend', () => { paused = false; }, { passive: true });
+
+    requestAnimationFrame(tick);
+  });
+}
+
 // --- Current year in footer ---
 const yearEl = document.getElementById('current-year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();

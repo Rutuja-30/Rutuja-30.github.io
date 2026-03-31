@@ -323,9 +323,18 @@ nav {
 
 .skills-strip-inner {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 1rem;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.skills-strip-inner::-webkit-scrollbar {
+  display: none;
 }
 
 .skill-tag {
@@ -335,6 +344,8 @@ nav {
   border-radius: 6px;
   font-size: 0.85rem;
   font-weight: 600;
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 /* === FEATURED PROJECT (homepage) === */
